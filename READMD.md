@@ -208,3 +208,101 @@ https://neon.tech/ is a decent service that let’s you create a server.
     ```
 
 -   to see if the table has been created or not
+
+## Interacting with the database
+
+**There are 4 things you’d like to do with a database**
+
+### 1. INSERT
+
+```sql
+INSERT INTO users (username, email, password)
+VALUES ('username_here', 'user@example.com', 'user_password');
+```
+
+> 💡Notice how you didn’t have to specify the id because it auto increments
+
+### 2. UPDATE
+
+```sql
+UPDATE users
+SET password = 'new_password'
+WHERE email = 'user@example.com';
+```
+
+### 3. DELETE
+
+```sql
+DELETE FROM users
+WHERE id = 1;
+```
+
+### 4. Select
+
+```sql
+SELECT * FROM users
+WHERE id = 1;
+```
+
+> 💡Try running all 4 of these in your terminal if you have `psql` installed locally.  
+> 💡 If not, that’s fine we’ll eventually be doing these through the `pg` library.
+
+## How to do queries from a Node.js app?
+
+-   In the end, postgres exposes a protocol that someone needs to talk to be able to send these commands (update, delete) to the database.
+-   `psql` is one such library that takes commands from your terminal and sends it over to the database.
+-   To do the same in a Node.js , you can use one of many `Postgres clients`
+
+### pg library
+
+-   [**pg package**](https://www.npmjs.com/package/pg) Non-blocking PostgreSQL client for Node.js. [**Documentation**](https://node-postgres.com/)
+
+-   Connecting-
+
+    ```js
+    import { Client } from "pg";
+
+    const client = new Client({
+    	host: "my.database-server.com",
+    	port: 5334,
+    	database: "database-name",
+    	user: "database-user",
+    	password: "secretpassword!!",
+    });
+
+    client.connect();
+    ```
+
+-   Querying-
+
+    ```js
+    const result = await client.query("SELECT * FROM USERS;");
+    console.log(result);
+    ```
+
+-   Write a function to create a users table in your database.
+
+    ```js
+    import { Client } from "pg";
+
+    const client = new Client({
+    	connectionString:
+    		"postgresql://postgres:mysecretpassword@localhost/postgres",
+    });
+
+    async function createUsersTable() {
+    	await client.connect();
+    	const result = await client.query(`
+            CREATE TABLE users (
+                id SERIAL PRIMARY KEY,
+                username VARCHAR(50) UNIQUE NOT NULL,
+                email VARCHAR(255) UNIQUE NOT NULL,
+                password VARCHAR(255) NOT NULL,
+                created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+            );
+        `);
+    	console.log(result);
+    }
+
+    createUsersTable();
+    ```
