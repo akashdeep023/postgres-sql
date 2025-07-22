@@ -1,0 +1,27 @@
+{
+	"name": "postgres-sql",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "tsc -b"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/akashdeep023/postgres-sql.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"type": "commonjs",
+	"bugs": {
+		"url": "https://github.com/akashdeep023/postgres-sql/issues"
+	},
+	"homepage": "https://github.com/akashdeep023/postgres-sql#readme",
+	"dependencies": {
+		"@types/pg": "^8.15.4",
+		"dotenv": "^17.2.0",
+		"pg": "^8.16.3"
+	}
+}
