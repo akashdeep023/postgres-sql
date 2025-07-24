@@ -1,4 +1,4 @@
-// Write a function to create a users table in your database.
+// Write a function to create a address table in your database.
 import { Client } from "pg";
 import dotenv from "dotenv";
 dotenv.config();
