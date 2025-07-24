@@ -1,1 +1,1 @@
-{"root":["./src/01createuserstable.ts","./src/02insert.ts","./src/03insert-secure.ts","./src/04getdata.ts","./src/05createaddresstable.ts","./src/06insertuserandaddress.ts"],"version":"5.8.3"}
+{"root":["./src/01createuserstable.ts","./src/02insert.ts","./src/03insert-secure.ts","./src/04getdata.ts","./src/05createaddresstable.ts","./src/06insertuserandaddress.ts","./src/07getuserandaddress.ts"],"version":"5.8.3"}
