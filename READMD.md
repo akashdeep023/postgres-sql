@@ -470,3 +470,61 @@ async function getUser(email: string) {
 // Example usage
 getUser("user5@example.com").catch(console.error);
 ```
+
+## Relationships and Transactions
+
+**Relationships let you store data in different tables and `relate` it with each other.**
+
+### Relationships in Mongodb
+
+-   Since `mongodb` is a NoSQL database, you can store any shape of data in it.
+-   If I ask you to store a users details along with their address, you can store it in an object that has the address details.
+
+### Relationships in SQL
+
+-   Since SQL can not store objects as such, we need to define two different tables to store this data in.
+-   If I ask you to store a users details along with their address, you can store it in an object that has the address details.
+
+### Relationships in SQL
+
+-   Since SQL can not store `objects` as such, we need to define two different tables to store this data in.
+-   This is called a `relationship` , which means that the `Address` table is related to the `Users` table.
+-   When defining the table, you need to define the `relationship`
+
+    ```ts
+    	CREATE TABLE users (
+    	id SERIAL PRIMARY KEY,
+    	username VARCHAR(50) UNIQUE NOT NULL,
+    	email VARCHAR(255) UNIQUE NOT NULL,
+    	password VARCHAR(255) NOT NULL,
+    	created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE TABLE addresses (
+    	id SERIAL PRIMARY KEY,
+    	user_id INTEGER NOT NULL,
+    	city VARCHAR(100) NOT NULL,
+    	country VARCHAR(100) NOT NULL,
+    	street VARCHAR(255) NOT NULL,
+    	pincode VARCHAR(20),
+    	created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    	FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    );
+    ```
+
+### SQL query
+
+-   To insert the address of a user -
+
+    ```ts
+    INSERT INTO addresses (user_id, city, country, street, pincode)
+    VALUES (1, 'New York', 'USA', '123 Broadway St', '10001');
+    ```
+
+-   Now if you want to get the address of a user given an id , you can run the following query -
+
+    ```ts
+    SELECT city, country, street, pincode
+    FROM addresses
+    WHERE user_id = 1;
+    ```
